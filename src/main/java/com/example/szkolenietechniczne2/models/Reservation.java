@@ -8,22 +8,26 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Entity
+@Entity(name = "reservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDateTime reservationDate;
+    private LocalDateTime stayStartDate;
+    private LocalDateTime stayEndDate;
+    private BigDecimal price;
+    @OneToMany(mappedBy = "reservation")
+    private List<Payment> payments;
     @ManyToOne
     private User user;
     @ManyToOne
     private PriceEntry priceEntry;
-    private LocalDateTime reservationDate;
-    private LocalDateTime bookingDate;
-    private BigDecimal price;
 }
