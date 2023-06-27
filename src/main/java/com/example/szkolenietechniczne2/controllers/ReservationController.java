@@ -36,4 +36,21 @@ public class ReservationController {
         Reservation createdReservation = reservationService.createReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
+
+    @PutMapping("/{reservationId}")
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation reservation) {
+        Reservation updatedReservation = reservationService.updateReservation(reservation);
+        if (updatedReservation != null) {
+            updatedReservation.setId(reservationId);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedReservation);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/{reservationId}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
+        reservationService.deleteReservation(reservationId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
