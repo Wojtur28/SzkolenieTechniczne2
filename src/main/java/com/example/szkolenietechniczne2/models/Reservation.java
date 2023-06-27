@@ -1,12 +1,13 @@
 package com.example.szkolenietechniczne2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,14 +21,21 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
+    @Column(name = "stay_start_date")
     private LocalDateTime stayStartDate;
+    @Column(name = "stay_end_date")
     private LocalDateTime stayEndDate;
-    private BigDecimal price;
     @OneToMany(mappedBy = "reservation")
+    @JsonBackReference
     private List<Payment> payments;
     @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "price_entry_id")
     private PriceEntry priceEntry;
 }

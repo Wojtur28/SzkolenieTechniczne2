@@ -15,12 +15,6 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping
-    public ResponseEntity<Reservation> createReservation(Reservation reservation) {
-        Reservation createdReservation = reservationService.createReservation(reservation);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
-    }
-
     @GetMapping("/{reservationId}")
     public ResponseEntity<Reservation> getReservation(@PathVariable Long reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
@@ -29,5 +23,17 @@ public class ReservationController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<Reservation>> getAllReservations() {
+        Iterable<Reservation> reservations = reservationService.getAllReservations();
+        return ResponseEntity.ok(reservations);
+    }
+
+    @PostMapping
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+        Reservation createdReservation = reservationService.createReservation(reservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
 }

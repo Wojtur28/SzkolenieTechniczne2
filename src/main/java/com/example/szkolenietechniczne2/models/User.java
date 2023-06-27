@@ -1,6 +1,7 @@
 package com.example.szkolenietechniczne2.models;
 
 import com.example.szkolenietechniczne2.user.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,5 +31,6 @@ public class User{
     @Column(name = "role")
     private Role role;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Reservation> reservations;
 }
