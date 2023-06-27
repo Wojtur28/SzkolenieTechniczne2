@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/price-entries")
+@CrossOrigin
 public class PriceEntryController {
 
     private final PriceEntryService priceEntryService;

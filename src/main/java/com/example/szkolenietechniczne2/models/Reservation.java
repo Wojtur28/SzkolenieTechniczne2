@@ -1,7 +1,9 @@
 package com.example.szkolenietechniczne2.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +33,11 @@ public class Reservation {
     @JsonBackReference
     private List<Payment> payments;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JsonManagedReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class , property = "id")
     @JoinColumn(name = "price_entry_id")
     private PriceEntry priceEntry;
 }
