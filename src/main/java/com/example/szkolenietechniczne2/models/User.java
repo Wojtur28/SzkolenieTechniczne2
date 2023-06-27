@@ -1,5 +1,7 @@
-package com.example.szkolenietechniczne2.user;
+package com.example.szkolenietechniczne2.models;
 
+import com.example.szkolenietechniczne2.user.Role;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +14,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
