@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class PriceEntryService {
     private final PriceEntryRepository priceEntryRepository;
 
+
     public PriceEntryService(PriceEntryRepository priceEntryRepository) {
         this.priceEntryRepository = priceEntryRepository;
     }
@@ -23,6 +24,7 @@ public class PriceEntryService {
     public PriceEntry createPriceEntry(PriceEntry priceEntry) {
         return priceEntryRepository.save(priceEntry);
     }
+
 
     public PriceEntry updatePriceEntry(PriceEntry priceEntry) {
         return priceEntryRepository.save(priceEntry);
