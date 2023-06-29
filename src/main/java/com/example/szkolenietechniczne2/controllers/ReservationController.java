@@ -1,19 +1,25 @@
 package com.example.szkolenietechniczne2.controllers;
 
 import com.example.szkolenietechniczne2.models.Reservation;
+import com.example.szkolenietechniczne2.models.User;
 import com.example.szkolenietechniczne2.services.ReservationService;
+import com.example.szkolenietechniczne2.services.impl.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/reservations")
 @CrossOrigin
 public class ReservationController {
     private final ReservationService reservationService;
+    private final UserServiceImpl userService;
 
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(ReservationService reservationService, UserServiceImpl userService) {
         this.reservationService = reservationService;
+        this.userService = userService;
     }
 
     @GetMapping("/{reservationId}")
@@ -33,10 +39,15 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByEmail(username);
+        reservation.setUser(user);
+
         Reservation createdReservation = reservationService.createReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReservation);
     }
+
 
     @PutMapping("/{reservationId}")
     public ResponseEntity<Reservation> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation reservation) {
