@@ -29,4 +29,22 @@ public class PriceEntryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPriceEntry);
     }
 
+
+    @PutMapping("/{priceEntryId}")
+    public ResponseEntity<PriceEntry> updatePriceEntry(@PathVariable Long priceEntryId, @RequestBody PriceEntry priceEntry) {
+        PriceEntry updatedPriceEntry = priceEntryService.updatePriceEntry(priceEntry);
+        if (updatedPriceEntry != null) {
+            updatedPriceEntry.setId(priceEntryId);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedPriceEntry);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/{priceEntryId}")
+    public ResponseEntity<Void> deletePriceEntry(@PathVariable Long priceEntryId) {
+        priceEntryService.deletePriceEntry(priceEntryId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

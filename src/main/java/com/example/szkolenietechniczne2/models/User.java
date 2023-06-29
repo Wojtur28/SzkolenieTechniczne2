@@ -3,6 +3,7 @@ package com.example.szkolenietechniczne2.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,18 +22,26 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "first_name")
-    @NonNull    private String firstName;
+    @Length(min = 1, max = 32, message = "First name must be between 1 and 32 characters")
+    private String firstName;
+
     @Column(name = "last_name")
-    @NonNull
+    @Length(min = 1, max = 32, message = "Last name must be between 1 and 32 characters")
     private String lastName;
+
     @Column(name = "email", unique = true)
+    @Length(min = 1, max = 32, message = "Email must be between 1 and 32 characters")
     private String email;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Reservation> reservations;

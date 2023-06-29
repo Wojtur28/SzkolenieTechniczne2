@@ -20,6 +20,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
